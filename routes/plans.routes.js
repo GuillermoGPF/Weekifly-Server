@@ -10,9 +10,10 @@ router.get('/getAllPlans', (req, res) => {
 })
 
 router.post('/createPlan', isAuthenticated, (req, res) => {
-    const { name, description, image, owner } = req.body
+    const { name, description, image } = req.body
+    const { _id } = req.payload
     Plans
-         .create({ name, description, image, owner })
+         .create({ name, description, image, owner: _id })
          .then(response => res.json(response))
          .catch(err => res.status(500).json(err))
 })
