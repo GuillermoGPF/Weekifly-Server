@@ -30,7 +30,11 @@ const userSchema = new Schema(
         type: String,
         enum: ['USER', 'PLANNER', 'ADMIN'],
         default: 'USER'
-    }
+    },
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 },
 {
     timestamps: true

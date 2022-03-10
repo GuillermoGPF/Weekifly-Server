@@ -5,7 +5,7 @@ const { isAuthenticated } = require('../middleware/jwt.middleware')
 router.get('/getAllPlans', (req, res) => {
     Plans
          .find()
-         .then(response => setTimeout(() => res.json(response), 2000))
+         .then(response => setTimeout(() => res.json(response), 1000))
          .catch(err => res.status(500).json(err))
 })
 

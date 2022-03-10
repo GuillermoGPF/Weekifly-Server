@@ -58,6 +58,7 @@ router.post('/login', (req, res) => {
 
     User
         .findOne({ email })
+        .populate('friends')
         .then((foundUser) => {
 
             if (!foundUser) {
@@ -66,9 +67,9 @@ router.post('/login', (req, res) => {
             }
 
             if (bcrypt.compareSync(password, foundUser.password)) {
-                const { _id, email, username, avatar } = foundUser
+                const { _id, email, username, avatar, friends } = foundUser
                 
-                const payload = { _id, email, username, avatar}
+                const payload = { _id, email, username, avatar, friends}
                 const authToken = jwt.sign(
                     payload,
                     process.env.TOKEN_SECRET,
