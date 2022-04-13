@@ -23,8 +23,8 @@ const userSchema = new Schema(
         type: String,
         default: 'https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg'
     },
-    bithday: {
-        type: Number
+    birthday: {
+        type: String
     },
     role: {
         type: String,
@@ -32,6 +32,10 @@ const userSchema = new Schema(
         default: 'USER'
     },
     friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    plans: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }]

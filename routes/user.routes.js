@@ -16,6 +16,7 @@ router.get('/getOneUser/:user_id', (req, res) => {
     User
         .findById(user_id)
         .populate('friends')
+        .populate('plans')
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
@@ -66,6 +67,23 @@ router.delete('/deleteFriend/:user_id/delete', isAuthenticated, (req, res) => {
                     .then(response => res.json(response)) 
             } else {
                 res.json(response)
+            }
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+router.put('/addPlans/:user_id', isAuthenticated, (req, res) => {
+    const { user_id } = req.params
+    const { _id } = req.payload
+    User
+        .findById(_id)
+        .then(response => {
+            if (response.plans.includes(user_id) || user_id == _id) { 
+                res.json(response)
+            } else {
+                User
+                    .findByIdAndUpdate(_id, {$push: {plans: user_id}}, {new: true})
+                    .then(response => res.json(response)) 
             }
         })
         .catch(err => res.status(500).json(err))
